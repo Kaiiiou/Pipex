@@ -6,13 +6,13 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:55:29 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/10 16:27:37 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/10 18:54:16 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-// # include "libft.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>

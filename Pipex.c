@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:56:12 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/10 17:44:01 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/10 18:53:18 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,33 @@ int	main(int argc, char **argv, char** envp)
 	}
 	infile_fd = open_infile(argv[1]);
 	outfile_fd = open_outfile(argv[4]);
-	pipe(pipefd);
-	if (!pipefd)
-		return (0);
+	if(pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		return (1);
+	}
 	pid1 = fork();
 	if (pid1 < 0)
-		perror(fork);
+	{
+		perror("fork");
+		return (1);
+	}
 	if (pid1 == 0)
 		child_process_1(pipefd, infile_fd, argv[2], envp);
 	pid2 = fork();
 	if (pid2 < 0)
-		perror(fork);
-	if (pid2 == 0)
-		child_process_1(pipefd, infile_fd, argv[3], envp);
+	{
+		perror("fork");
+		return (1);
+	}
+		if (pid2 == 0)
+		child_process_2(pipefd, outfile_fd, argv[3], envp);
+	close(infile_fd);
+	close(outfile_fd);
+	close(pipefd[0]);
+	close(pipefd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+
+	return (0);
 }
