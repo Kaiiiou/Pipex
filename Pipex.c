@@ -80,8 +80,10 @@ int	main(int argc, char **argv, char** envp)
 	}
 		if (pid2 == 0)
 		child_process_2(pipefd, outfile_fd, argv[3], envp);
-	close(infile_fd);
-	close(outfile_fd);
+	if (infile_fd != -1)
+		close(infile_fd);
+	if (outfile_fd != -1)
+		close(outfile_fd);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(pid1, NULL, 0);
