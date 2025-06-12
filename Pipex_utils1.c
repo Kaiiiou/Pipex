@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:56:06 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/10 16:10:52 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/12 11:18:26 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	**parse_cmd(char *cmd_str)
 {
 	if (!cmd_str)
-		return(NULL);
-	return(ft_split(cmd_str, ' '));
+		return (NULL);
+	return (ft_split(cmd_str, ' '));
 }
 
 void	execute_cmd(char *cmd_str, char **envp)
@@ -26,7 +26,6 @@ void	execute_cmd(char *cmd_str, char **envp)
 
 	if (!cmd_str || !envp)
 		return ;
-	
 	cmdp = parse_cmd(cmd_str);
 	if (!cmdp)
 		return ;
@@ -42,20 +41,32 @@ void	execute_cmd(char *cmd_str, char **envp)
 	exit(1);
 }
 
-void	child_process_1(int *pipefd, int infile_fd, char *cmd, char **envp)
+void	child_process_1(int *pipefd, char *infile_nme, char *cmd, char **envp)
 {
+	int	infile_fd;
+
+	infile_fd = open_infile(infile_nme);
+	if (infile_fd == -1)
+		exit(1);
 	dup2(infile_fd, 0);
 	dup2(pipefd[1], 1);
 	close(pipefd[0]);
 	close(pipefd[1]);
+	close(infile_fd);
 	execute_cmd(cmd, envp);
 }
 
-void child_process_2(int *pipefd, int outfile_fd, char *cmd, char **envp)
+void	child_process_2(int *pipefd, char *outfile_nme, char *cmd, char **envp)
 {
+	int	outfile_fd;
+
+	outfile_fd = open_outfile(outfile_nme);
+	if (outfile_fd == -1)
+		exit(1);
 	dup2(pipefd[0], 0);
 	dup2(outfile_fd, 1);
 	close(pipefd[0]);
 	close(pipefd[1]);
+	close(outfile_fd);
 	execute_cmd(cmd, envp);
 }

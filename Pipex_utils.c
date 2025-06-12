@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:31:59 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/10 15:12:00 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/12 11:19:50 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	open_infile(char *filename)
 {
 	int	fd;
+
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		perror("error open infile");
@@ -24,6 +25,7 @@ int	open_infile(char *filename)
 int	open_outfile(char *filename)
 {
 	int	fd;
+
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		perror("error open outfile");
@@ -36,7 +38,7 @@ char	*find_path_in_env(char **envp)
 
 	i = 0;
 	if (!envp)
-		return(NULL);
+		return (NULL);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)

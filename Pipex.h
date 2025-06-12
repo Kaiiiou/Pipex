@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:55:29 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/10 18:54:16 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/12 11:16:55 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ char	**split_path(char *path_str);
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_array(char **array);
 char	**parse_cmd(char *cmd_str);
-void	child_process_1(int *pipefd, int infile_fd, char *cmd, char **envp);
-void	child_process_2(int *pipefd, int outfile_fd, char *cmd, char **envp);
+void	child_process_1(int *pipefd, char *infile_nme, char *cmd, char **envp);
+void	child_process_2(int *pipefd, char *outfile_nme, char *cmd, char **envp);
