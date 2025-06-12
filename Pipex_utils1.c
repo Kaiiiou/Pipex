@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:56:06 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/12 11:18:26 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:15:11 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	execute_cmd(char *cmd_str, char **envp)
 	char	*path;
 
 	if (!cmd_str || !envp)
-		return ;
+		exit(1);
 	cmdp = parse_cmd(cmd_str);
 	if (!cmdp)
-		return ;
+		exit(1);
 	path = get_cmd_path(cmdp[0], envp);
 	if (!path)
 	{
@@ -37,6 +37,8 @@ void	execute_cmd(char *cmd_str, char **envp)
 		exit(1);
 	}
 	execve(path, cmdp, envp);
+	free(path);
+	free_array(cmdp);
 	perror("execve failed");
 	exit(1);
 }
