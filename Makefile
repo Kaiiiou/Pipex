@@ -6,7 +6,7 @@
 #    By: amarti <amarti@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 15:52:52 by amarti            #+#    #+#              #
-#    Updated: 2025/06/12 22:05:52 by amarti           ###   ########.fr        #
+#    Updated: 2025/06/12 22:08:36 by amarti           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ $(libft):
 
 clean:
 	$(RM) $(OBJ)
+	$(MAKE) clean -C $(libft)
 
 fclean: clean
 	$(RM) $(NAME)
