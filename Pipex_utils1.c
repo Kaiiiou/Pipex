@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:56:06 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/12 15:15:11 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/12 22:04:38 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,28 @@ void	execute_cmd(char *cmd_str, char **envp)
 	char	**cmdp;
 	char	*path;
 
-	if (!cmd_str || !envp)
+	if (!cmd_str || cmd_str[0] == '\0' || !envp)
 		exit(1);
 	cmdp = parse_cmd(cmd_str);
 	if (!cmdp)
 		exit(1);
-	path = get_cmd_path(cmdp[0], envp);
+	if (access(cmdp[0], F_OK | X_OK) == 0)
+		path = cmdp[0];
+	else
+		path = get_cmd_path(cmdp[0], envp);
 	if (!path)
 	{
 		free_array(cmdp);
-		perror("command not found");
+		ft_putstr_fd("command not found\n", 2);
 		exit(1);
 	}
-	execve(path, cmdp, envp);
-	free(path);
-	free_array(cmdp);
-	perror("execve failed");
-	exit(1);
+	if (execve(path, cmdp, envp) == -1)
+	{
+		perror("execve failed");
+		free(path);
+		free_array(cmdp);
+		exit(1);
+	}
 }
 
 void	child_process_1(int *pipefd, char *infile_nme, char *cmd, char **envp)
@@ -49,7 +54,11 @@ void	child_process_1(int *pipefd, char *infile_nme, char *cmd, char **envp)
 
 	infile_fd = open_infile(infile_nme);
 	if (infile_fd == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
 		exit(1);
+	}
 	dup2(infile_fd, 0);
 	dup2(pipefd[1], 1);
 	close(pipefd[0]);
@@ -64,7 +73,11 @@ void	child_process_2(int *pipefd, char *outfile_nme, char *cmd, char **envp)
 
 	outfile_fd = open_outfile(outfile_nme);
 	if (outfile_fd == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
 		exit(1);
+	}
 	dup2(pipefd[0], 0);
 	dup2(outfile_fd, 1);
 	close(pipefd[0]);
