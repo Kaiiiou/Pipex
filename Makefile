@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amarti <amarti@student.42.fr>              +#+  +:+       +#+         #
+#    By: kai-iou <kai-iou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 15:52:52 by amarti            #+#    #+#              #
-#    Updated: 2025/06/12 22:08:36 by amarti           ###   ########.fr        #
+#    Updated: 2025/06/13 20:02:36 by kai-iou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	pipex
 
-CC		=	gcc
+CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g $(INCLUDES)
 RM		=	rm -f
 CLONE	=	git clone
@@ -50,7 +50,7 @@ $(libft):
 
 clean:
 	$(RM) $(OBJ)
-	$(MAKE) clean -C $(libft)
+	$(MAKE) -C $(libft) clean
 
 fclean: clean
 	$(RM) $(NAME)

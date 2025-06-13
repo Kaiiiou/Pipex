@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pipex_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kai-iou <kai-iou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:56:06 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/12 22:04:38 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/13 20:00:57 by kai-iou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execute_cmd(char *cmd_str, char **envp)
 	if (!cmdp)
 		exit(1);
 	if (access(cmdp[0], F_OK | X_OK) == 0)
-		path = cmdp[0];
+		path = ft_strdup(cmdp[0]);
 	else
 		path = get_cmd_path(cmdp[0], envp);
 	if (!path)
