@@ -6,7 +6,7 @@
 /*   By: amarti <amarti@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:56:12 by amarti            #+#    #+#             */
-/*   Updated: 2025/06/12 21:45:37 by amarti           ###   ########.fr       */
+/*   Updated: 2025/06/16 21:39:03 by amarti           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid2;
 
 	if (argc != 5)
-		return (printf("usage : ./pipex infile cmd1 cmd2 outfile\n"));
+		return (ft_printf("usage : ./pipex infile cmd1 cmd2 outfile\n"));
 	if (pipe(pipefd) == -1)
 		return (perror("pipe"), 1);
 	pid1 = fork();
